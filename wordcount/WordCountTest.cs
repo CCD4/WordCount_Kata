@@ -10,7 +10,7 @@ namespace wordcount
         [TestCase("A!B", new[] { "A", "B" })]
         public void ExtractWords(string input, string[] expected)
         {
-            var actual = Program.ExtractWords(input);
+            var actual = Parser.ExtractWords(input);
             Assert.AreEqual(expected, actual);
         }
 
@@ -20,7 +20,7 @@ namespace wordcount
             var words = new[] {"word", "stopword", "1"};
             var stopwords = new[] {"stopword", "2"};
             var expected = new[] {"word", "1"};
-            var actual = Program.RemoveStopwords(words, stopwords);
+            var actual = WordCount.RemoveStopwords(words, stopwords);
             Assert.AreEqual(expected, actual);
         }
     }
