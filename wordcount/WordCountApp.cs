@@ -5,7 +5,8 @@
         public static void Run()
         {
             string text = ConsoleUI.InputText();
-            int count = WordCount.CountWords(text);
+            string[] stopwords = FileIO.FetchStopwords();
+            int count = WordCount.CountWords(text, stopwords);
             ConsoleUI.Output(count);
         }
     }

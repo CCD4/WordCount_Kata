@@ -5,10 +5,10 @@ namespace wordcount
 {
     public class WordCount
     {
-        public static int CountWords(string text)
+        public static int CountWords(string text, string[] stopwords)
         {
             IEnumerable<string> words = Parser.ExtractWords(text);
-            words = FilterStopwords(words);
+            words = RemoveStopwords(words, stopwords);
             return Count(words);
         }
 
@@ -16,13 +16,7 @@ namespace wordcount
         {
             return words.Count();
         }
-
-        private static IEnumerable<string> FilterStopwords(IEnumerable<string> words)
-        {
-            var stopwords = FileIO.FetchStopwords();
-            return RemoveStopwords(words, stopwords);
-        }
-
+        
         public static string[] RemoveStopwords(IEnumerable<string> words, string[] stopwords)
         {
             return words.Except(stopwords).ToArray();
