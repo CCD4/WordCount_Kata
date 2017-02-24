@@ -2,9 +2,9 @@
 {
     internal class Program
     {
-        private static void Main()
+        private static void Main(string[] args)
         {
-            WordCountApp.Run();
+            WordCountApp.Run(args);
         }
     }
 }

@@ -8,5 +8,10 @@ namespace wordcount
         {
             return File.ReadAllLines("stopwords.txt");
         }
+
+        public static string ReadTextFromFile(string filename)
+        {
+            return File.ReadAllText(filename);
+        }
     }
 }
