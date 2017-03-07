@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using System;
 
 namespace wordcount
 {
@@ -6,20 +6,27 @@ namespace wordcount
     {
         public static void Run(string[] args)
         {
-            string text = GetText(args);
-            string[] stopwords = FileIO.FetchStopwords();
-            int count = WordCount.CountWords(text, stopwords);
-            ConsoleUI.Output(count);
+            var stopwords = FileIO.FetchStopwords();
+            ChooseInputMethod(args, () =>
+                {
+                    var text = FileIO.ReadTextFromFile(args[0]);
+                    var count = WordCount.CountWords(text, stopwords);
+                    ConsoleUI.Output(count);
+                },
+                () =>
+                {
+                    var text = ConsoleUI.InputText();
+                    var count = WordCount.CountWords(text, stopwords);
+                    ConsoleUI.Output(count);
+                });
         }
-
-        private static string GetText(string[] args)
+        
+        private static void ChooseInputMethod(string[] args, Action onReadFromFile, Action onReadFromConsole)
         {
             if (args.Length == 1)
-                return FileIO.ReadTextFromFile(args[0]);
+                onReadFromFile();
             else
-            {
-                return ConsoleUI.InputText();
-            }
+                onReadFromConsole();
         }
     }
 }
