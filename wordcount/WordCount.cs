@@ -17,7 +17,7 @@ namespace wordcount
             return words.Count();
         }
         
-        public static string[] RemoveStopwords(IEnumerable<string> words, string[] stopwords)
+        internal static string[] RemoveStopwords(IEnumerable<string> words, string[] stopwords)
         {
             return words.Except(stopwords).ToArray();
         }
