@@ -6,31 +6,32 @@ namespace wordcount
     {
         public static void Run(string[] args)
         {
-            ChooseInputMethod(args, () =>
-                {
-                    var text = FileIO.ReadTextFromFile(args[0]);
-                    OutputWordCount(text);
-                },
-                () =>
-                {
-                    var text = ConsoleUI.InputText();
-                    OutputWordCount(text);
-                });
-        }
+            var text ="";
+            ProcessCommandLine(args,
+                fileName => text = FileIO.ReadTextFromFile(fileName),
+                () => text = ConsoleUI.InputText());
 
-        private static void OutputWordCount(string text)
-        {
-            var stopwords = FileIO.FetchStopwords();
-            var count = WordCount.CountWords(text, stopwords);
+            var count = DoCountWords(text);
+
             ConsoleUI.Output(count);
         }
 
-        private static void ChooseInputMethod(string[] args, Action onReadFromFile, Action onReadFromConsole)
+        private static int DoCountWords(string text)
+        {
+            var stopwords = FileIO.FetchStopwords();
+            var count = WordCount.CountWords(text, stopwords);
+            return count;
+        }
+
+        private static void ProcessCommandLine(string[] args, Action<string> onFileNameFound, Action onNoFileNameFound)
         {
             if (args.Length == 1)
-                onReadFromFile();
+            {
+                var fileName = args[0];
+                onFileNameFound(fileName);
+            }
             else
-                onReadFromConsole();
+                onNoFileNameFound();
         }
     }
 }

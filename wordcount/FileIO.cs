@@ -4,11 +4,11 @@ namespace wordcount
 {
     class FileIO
     {
-        internal static string stopWordsPath = "stopwords.txt";
+        private const string StopWordsPath = "stopwords.txt";
 
         public static string[] FetchStopwords()
         {
-            return File.ReadAllLines(stopWordsPath);
+            return File.ReadAllLines(StopWordsPath);
         }
 
         public static string ReadTextFromFile(string filename)

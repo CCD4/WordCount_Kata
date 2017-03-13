@@ -7,13 +7,17 @@ namespace wordcount
     [TestFixture]
     public class WordCountAppTest
     {
+        [SetUp]
+        public void SetUp()
+        {
+            var currentContextWorkDirectory = TestContext.CurrentContext.TestDirectory;
+            Environment.CurrentDirectory = currentContextWorkDirectory;
+        }
+
         [Test]
-        [Explicit]
         public void ReadWordsFromFile()
         {
-            FileIO.stopWordsPath = @"C:\Users\svenk\Source\Repos\WordCount_Kata\wordcount\stopwords.txt";
-
-            var path = @"C:\Users\svenk\Source\Repos\WordCount_Kata\wordcount\mytext.txt";
+            var path = @"mytext.txt";
             var stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
 
@@ -23,11 +27,8 @@ namespace wordcount
         }
 
         [Test]
-        [Explicit]
         public void ReadWordsFromUi()
         {
-            FileIO.stopWordsPath = @"C:\Users\svenk\Source\Repos\WordCount_Kata\wordcount\stopwords.txt";
-
             var stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
             var stringReader = new StringReader("Mary had a little lamb" + Environment.NewLine);
